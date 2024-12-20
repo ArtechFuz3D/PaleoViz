@@ -1,0 +1,66 @@
+{
+  "name": "astro-landing-page",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "format": "prettier --write **/*.astro .",
+    "clean": "rimraf dist .astro node_modules"
+  },
+  "devDependencies": {
+    "@astrojs/react": "^3.6.3",
+    "@astrojs/svelte": "^5.7.3",
+    "@astrojs/tailwind": "^5.1.3",
+    "@iconify-json/bi": "^1.2.1",
+    "@iconify-json/carbon": "^1.2.4",
+    "@iconify-json/fa-brands": "^1.2.0",
+    "@iconify-json/game-icons": "^1.2.1",
+    "@iconify-json/mdi": "^1.2.1",
+    "@iconify-json/tabler": "^1.2.10",
+    "@react-three/cannon": "^6.6.0",
+    "@react-three/drei": "^9.120.2",
+    "@react-three/fiber": "^8.17.10",
+    "@react-three/postprocessing": "^2.16.3",
+    "@react-three/rapier": "^1.5.0",
+    "@tailwindcss/typography": "^0.5.15",
+    "@tauri-apps/cli": "^2.1.0",
+    "@types/micromodal": "^0.3.5",
+    "@types/react": "^18.3.14",
+    "@types/react-dom": "^18.3.2",
+    "@types/three": "^0.150.0",
+    "leva": "^0.9.35",
+    "prettier": "^3.4.2",
+    "prettier-plugin-astro": "^0.13.0",
+    "prettier-plugin-tailwindcss": "^0.5.14",
+    "r3f-perf": "^7.2.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "rimraf": "^5.0.10",
+    "tailwindcss-fluid-type": "^2.0.7",
+    "three": "^0.159.0",
+    "three-mesh-bvh": "^0.8.3"
+  },
+  "dependencies": {
+    "@fontsource-variable/inter": "^5.1.0",
+    "astro": "^4.16.17",
+    "astro-icon": "^1.1.4",
+    "esbuild": "^0.24.0",
+    "micromodal": "^0.4.10",
+    "sharp": "^0.33.5",
+    "suspend-react": "^0.1.3",
+    "svelte": "^4.2.19",
+    "tailwindcss": "^3.4.16",
+    "tiny-invariant": "^1.3.3"
+  },
+  "packageManager": "pnpm@9.12.0+sha512.4abf725084d7bcbafbd728bfc7bee61f2f791f977fd87542b3579dcb23504d170d46337945e4c66485cd12d588a0c0e570ed9c477e7ccdd8507cf05f3f92eaca",
+  "pnpm": {
+    "overrides": {
+      "three-mesh-bvh": "^0.8.3"
+    }
+  }
+}

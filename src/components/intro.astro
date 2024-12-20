@@ -1,0 +1,62 @@
+---
+import { Icon } from "astro-icon/components";
+import ContentSection from "~/components/content-section.astro";
+---
+
+<ContentSection title="Plug & Play" id="intro">
+  <Icon slot="eyebrow" name="mdi:play" class="size-32" />
+  <!-- <Fragment slot="lead">
+    A plug-and-play audio visualiser
+    <span class="text-primary">modern</span> web.
+    <span class="text-primary">Lightning-fast</span>
+    performance meets <span class="text-primary">powerful</span> developer experience.
+  </Fragment> -->
+  <!-- <Fragment slot="lead">
+    A plug-and-play audio visualiser for 
+    <span class="text-primary">modern</span> streamers and content creators. 
+    <span class="text-primary">Lightning-fast</span> performance with 
+    <span class="text-primary">seamless</span> browser-based integration.
+</Fragment> -->
+<Fragment slot="lead">
+  <span class="text-primary">Audio Visualiser</span> for  
+  <span class="text-primary">Streamers</span> and <span class="text-primary">Content Creators</span>.  
+  Generate <span class="text-primary">Real-Time</span> Visualisers right in your  
+  <span class="text-primary">Browser</span>.
+</Fragment>
+
+
+  <div class="grid grid-cols-1 gap-2 sm:grid-cols-1">
+    <a
+      href="/flviz1"
+      class="flex items-center justify-center gap-3 border-2 border-current px-6 py-4"
+    >
+      <Icon name="mdi:play" class="size-8" />
+      <span>Play!</span>
+    </a>
+    <!--  -->
+    <!-- <a
+      href="/visualiser"
+      class="flex items-center justify-center gap-3 border-2 border-current px-6 py-4"
+    >
+      <Icon name="mdi:rocket" class="size-8" />
+      <span>Visualiser</span>
+    </a> -->
+    <!--  -->
+    <!-- <a
+      href="/experiment"
+      class="flex items-center justify-center gap-3 border-2 border-current px-6 py-4"
+    >
+      <Icon name="mdi:beaker" class="size-8" />
+      <span>Experiment</span>
+    </a> -->
+    <!--  -->
+    <!-- <a
+      href="/flviz1"
+      class="flex items-center justify-center gap-3 border-2 border-current px-6 py-4"
+    >
+      <Icon name="mdi:star" class="size-8" />
+      <span>2D Visualisers</span>
+    </a> -->
+    <!--  -->
+  </div>
+</ContentSection>

@@ -1,0 +1,103 @@
+---
+import "@fontsource-variable/inter";
+
+import "~/styles/index.css";
+
+const { generator, site } = Astro;
+const image = new URL("social.jpg", site);
+const description =
+  "Build fast websites, faster. Astro is a new kind of site builder for the modern web. Lightning-fast performance meets powerful developer experience.";
+---
+
+<!doctype html>
+<html lang="en" class="h-full motion-safe:scroll-smooth" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE-edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="generator" content={generator} />
+
+    <title>FLViz1 JS Sounds</title>
+    <meta name="description" content={description} />
+
+    <!-- social media -->
+    <meta property="og:title" content="FLViz1 JS Sounds" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+    <meta property="og:url" content={site} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- initialize theme -->
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      #canvas1 {
+        /* filter: blur(10px) contrast(10) */
+      }
+      #canvas-constellation {
+        z-index: -5;
+        position: absolute;
+        top: 0;
+        left: 0;
+        filter: blur(6px) contrast(10);
+      }
+      #canvas-constellation2 {
+        z-index: -5;
+        position: absolute;
+               /* filter: blur(10px) contrast(10); */
+        /* top: 0;
+    left: 0; */
+      }
+    </style>
+  </head>
+  <body
+    class="h-full w-full overflow-x-hidden bg-default text-default text-base selection:bg-secondary selection:text-white"
+  >
+    <!-- <PlaybackManager client:only="react"/> -->
+
+    <div
+      id="container"
+      class="overflowx-x-hidden absolute left-2.5 h-full w-full space-y-10 px-4"
+    >
+      <!-- <button  id="button1">BUTT 1</button>
+    <button  id="button2">BUTT 2</button> -->
+
+      <!-- <canvas class="absolute h-full blur-sm invert brightness-150 hover:blur-lg" id="canvas1"></canvas> -->
+      <!-- <canvas class="absolute h-full blur-lg brightness-200" id="canvas1"></canvas> -->
+      <!-- <canvas class="absolute overflow-hidden w-full h-full hover:blur-3xl  brightness-150 contrast-150" id="canvas1"></canvas> -->
+      <canvas
+        class="absolute h-full w-full overflow-hidden bg-transparent"
+        id="canvas1"></canvas>
+      <canvas
+        class="absolute  overflow-hidden bg-black"
+        id="canvas-constellation"
+      >
+      </canvas>
+      <canvas
+        class="absolute  overflow-hidden bg-transparent"
+        id="canvas-constellation2"
+      >
+      </canvas>
+      <audio class="mt-150-auto block" id="audio1" controls></audio>
+
+      <div class="white z-100 absolute py-2">
+        <input
+          class="bottom-10 block flex-auto bg-transparent font-black"
+          type="file"
+          id="fileupload"
+          accept="audio/*"
+        />
+      </div>
+
+      <script
+        src="../../../components-fl1/part02/12particleexperiment/script.js"
+      ></script>
+    </div>
+  </body>
+</html>

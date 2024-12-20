@@ -1,0 +1,180 @@
+---
+import { Icon } from "astro-icon/components";
+import ContentSection from "~/components/content-section.astro";
+import type { FeatureItem } from "~/types";
+
+const features: Array<FeatureItem> = [
+  // {
+  //   title: "Bring Your Own Audio",
+  //   description:
+  //     "Build your site using React, Svelte, Vue, Preact, web components, or just plain ol' HTML + JavaScript.",
+  //   icon: "mdi:handshake",
+  // },
+  // {
+  //   title: "Choose Your Visualiser Type",
+  //   description:
+  //     "Astro renders your entire page to static HTML, removing all JavaScript from your final build by default.",
+  //   icon: "mdi:feather",
+  // },
+  // {
+  //   title: "Stream Overlay",
+  //   description:
+  //     "Add the visualiser as a stream overlay?. Explore various ways to enjoy your visualiser.",
+  //   icon: "mdi:directions-fork",
+  // },
+  // {
+  //   title: "Broad Integration",
+  //   description:
+  //     "Astro supports TypeScript, Scoped CSS, CSS Modules, Sass, Tailwind, Markdown, MDX, and any of your favorite npm packages.",
+  //   icon: "mdi:graph",
+  // },
+  // {
+  //   title: "SEO Enabled",
+  //   description:
+  //     "Automatic sitemaps, RSS feeds, pagination and collections take the pain out of SEO and syndication.",
+  //   icon: "mdi:search-web",
+  // },
+  // {
+  //   title: "Community",
+  //   description:
+  //     "Astro is an open source project powered by hundreds of contributors making thousands of individual contributions.",
+  //   icon: "mdi:account-group",
+  // },
+  // {
+  //   title: "Bring Your Own Audio",
+  //   description:
+  //     "Easily connect your own audio sources—stream music, voice, or any sound directly to the visualiser.",
+  //   icon: "mdi:audio",
+  // },
+  // {
+  //   title: "Choose Your Visualiser Type",
+  //   description:
+  //     "Select from a variety of stunning visualiser styles to match your brand and content.",
+  //   icon: "mdi:select",
+  // },
+  // {
+  //   title: "Stream Overlay",
+  //   description:
+  //     "Effortlessly integrate the visualiser as a customizable overlay for your streams.",
+  //   icon: "carbon:overlay",
+  // },
+  // {
+  //   title: "Browser-Based Simplicity",
+  //   description:
+  //     "No installations required—run the visualiser directly in your browser for maximum ease.",
+  //   icon: "mdi:web",
+  // },
+  // {
+  //   title: "Customizable Themes",
+  //   description:
+  //     "Personalize colors, shapes, and effects to align with your unique style.",
+  //   icon: "mdi:palette",
+  // },
+  // {
+  //   title: "Optimized for Performance",
+  //   description:
+  //     "Enjoy lightning-fast visuals with minimal impact on your system or stream quality.",
+  //   icon: "mdi:rocket-launch",
+  // },
+  // {
+  //   title: "Responsive and Scalable",
+  //   description:
+  //     "Works seamlessly across devices and screen sizes, from full HD monitors to mobile displays.",
+  //   icon: "mdi:responsive",
+  // },
+  // {
+  //   title: "Real-Time Audio Reaction",
+  //   description:
+  //     "Your visuals respond dynamically to audio in real time, creating an engaging experience.",
+  //   icon: "mdi:pulse",
+  // },
+  // {
+  //   title: "Seamless OBS Integration",
+  //   description:
+  //     "Optimized for OBS, making it easy to set up and sync with your streaming workflow.",
+  //   icon: "mdi:video-input-component",
+  // }
+  {
+    title: "Bring Your Own Audio",
+    description:
+      "Easily connect any audio—whether it’s music, voice, or sound effects—directly to your visualiser for an immersive experience.",
+    icon: "mdi:audio",
+  },
+  {
+    title: "Choose Your Visualiser Type",
+    description:
+      "Pick from a variety of visually stunning styles to complement your content, whether it's for a live stream, music video, or social media post.",
+    icon: "mdi:select",
+  },
+  {
+    title: "Stream Overlay",
+    description:
+      "Add a unique touch to your live streams with custom overlays that adapt to your audio, perfect for creators, gamers, and influencers.",
+    icon: "carbon:overlay",
+  },
+  {
+    title: "Browser-Based Simplicity",
+    description:
+      "No need to download anything—just launch the visualiser directly in your browser for a hassle-free experience on any device.",
+    icon: "mdi:web",
+  },
+  {
+    title: "Customizable Themes",
+    description:
+      "Make it yours by adjusting colors, shapes, and effects, so your visualiser fits perfectly with your branding or personal style.",
+    icon: "mdi:palette",
+  },
+  {
+    title: "Optimized for Performance",
+    description:
+      "Enjoy smooth and fast visuals without compromising your system performance, whether you're streaming, recording, or creating videos.",
+    icon: "mdi:rocket-launch",
+  },
+  {
+    title: "Responsive and Scalable",
+    description:
+      "Your visualiser will look great on any screen—from large monitors to mobile devices—ensuring your audience always has the best viewing experience.",
+    icon: "mdi:responsive",
+  },
+  {
+    title: "Real-Time Audio Reaction",
+    description:
+      "Watch as your visuals react instantly to the beat and rhythm of your audio, creating a dynamic and engaging experience for your viewers.",
+    icon: "mdi:pulse",
+  },
+  {
+    title: "Seamless OBS Integration",
+    description:
+      "Quickly integrate the visualiser into your OBS setup, syncing effortlessly with your streaming workflow to enhance your content without any hassle.",
+    icon: "mdi:video-input-component",
+  }
+];
+---
+
+<ContentSection title="How To Use" id="features">
+  <!-- <Fragment slot="lead">
+    ArtechFuz3D <span class="text-primary">Visualisers</span> come with <span class="text-primary">batteries included</span>. Just 
+    add your <span class="text-primary">URL </span>to OBS 
+    <span class="text-primary">as browser source </span>
+    and press <span class="text-primary">play</span>
+  </Fragment> -->
+  <Fragment slot="lead">
+    ArtechFuz3D <span class="text-primary">Visualisers</span> come with <span class="text-primary">batteries included</span>.
+    Simply add your <span class="text-primary">URL</span> to OBS as a <span class="text-primary">browser source</span>  
+    and press <span class="text-primary">play</span>.
+</Fragment>
+
+  <ul class="grid max-w-6xl grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+    {
+      features.map(({ title, description, icon }) => (
+        <li class="flex flex-col items-center gap-4 border border-default bg-offset p-6">
+          <div class="size-16 rounded-full border-2 border-current p-3">
+            <Icon name={icon} class="size-full" />
+          </div>
+          <p class="text-center font-extrabold text-xl">{title}</p>
+          <p class="text-center text-offset text-sm">{description}</p>
+        </li>
+      ))
+    }
+  </ul>
+</ContentSection>

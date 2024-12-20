@@ -1,0 +1,172 @@
+* {
+  box-sizing: border-box;
+  background: transparent;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  /* background: linear-gradient(15deg, #33aabe 30%, #f00fa9 40%); */
+  /* background: radial-gradient( #68b0cc, #934ba5); */
+  /* background: #000000; */
+  /* background: transparent; */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  overflow: hidden;
+  /* filter: blur(1px)  grayscale(100); */
+  /* filter: blur(1px)  contrast(5); */
+  /* filter: blur(20px)  contrast(8) brightness(10); */
+  /* filter: blur(12px)  contrast(10) brightness(1); */
+  /* filter: blur(2px)  contrast(4) brightness(4); */
+  /* filter: blur(6px)  contrast(10) brightness(10); */
+  /* filter: blur(1px)  contrast(3) ; */
+
+}
+
+body {
+  position: fixed;
+  overflow: hidden;
+  overscroll-behavior-y: none;
+  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
+  /* color: black; */
+  text-shadow: 1px 1px #00000060;
+  
+}
+
+.car {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+ 
+}
+
+button {
+  height: 32px;
+  min-width: 100px;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  background: white;
+  border: 1px solid transparent;
+  border-bottom: 3px solid #a0a0a0;
+  border-radius: 3px;
+  padding: 8px 24px;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  width: auto;
+  height: 45px;
+}
+
+.fullscreen {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 1s;
+  z-index: 100;
+}
+
+.stack {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  color: #606060;
+  /* z-index: 10; */
+}
+
+.bg {
+  /* background: radial-gradient( #68b0cc, #082735); */
+  background: radial-gradient( #3a3a3a, #000000);
+}
+
+.fullscreen .logout {
+  background: transparent;
+  border: none;
+  width: auto;
+  color: white;
+  display: block;
+  margin: 10px auto;
+}
+
+.fullscreen .continue-link {
+  text-decoration: none;
+  transition: all 1s;
+  width: 20%;
+  text-align: center;
+}
+
+.fullscreen.notready .continue-link {
+  cursor: auto;
+  color: #b4ad84;
+}
+
+.fullscreen.ready .continue-link {
+  cursor: pointer;
+  color: #84b4a2;
+}
+
+.fullscreen.clicked {
+  pointer-events: none;
+  opacity: 0;
+}
+
+.controls {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.controls label {
+  margin-right: 10px;
+}
+
+.song-select, .song-selected {
+  margin-bottom: 20px;
+  color: #000000;
+}
+
+.stack button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#volumeSlider {
+  z-index: 10;
+  position: absolute;
+display: flex;
+justify-content: center;
+top: 0;
+}
+.volume-controller {
+  z-index: 11;
+  position: absolute;
+display: flex;
+top: 0;
+left: 0;
+}
+

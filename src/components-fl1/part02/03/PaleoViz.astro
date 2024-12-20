@@ -1,0 +1,144 @@
+---
+import "@fontsource-variable/inter";
+import "~/styles/index.css";
+
+const { generator, site } = Astro;
+const image = new URL("vizhero.png", site);
+const description = "Build fast Audio Visualisers with ArtechFuz3D.";
+---
+
+<!doctype html>
+<html lang="en" class="h-full motion-safe:scroll-smooth" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE-edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="generator" content={generator} />
+    <link
+      href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css"
+      rel="stylesheet"
+    />
+    <title>Fossil Spiral Audio Visualiser</title>
+    <meta name="description" content={description} />
+    <style>
+      #canvas1 {
+        background-color: rgb(0, 0, 0);
+        /* background: transparent; */
+      }
+
+      /* Styling for playlist controls */
+      .playlist-controls {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        z-index: 10;
+        color: white;
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .playlist-controls button {
+        margin: 5px;
+        padding: 10px;
+        font-size: 24px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border: none;
+        color: white;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .playlist-controls button:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+      }
+
+      .playlist-controls ul {
+        list-style-type: none;
+        padding: 0;
+        margin-top: 20px;
+      }
+
+      .playlist-controls li {
+        cursor: pointer;
+        padding: 8px;
+        margin-bottom: 5px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+        transition: background-color 0.3s;
+      }
+
+      .playlist-controls li:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+      #visualizerMenu {
+        position: absolute;
+        top: 20px;
+        right: 120px;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        color: dimgray;
+      }
+
+      #visualizerSelect {
+        font-size: 16px;
+        padding: 5px;
+      }
+
+      #audio1, ul {
+        display: none;
+      }
+    </style>
+  </head>
+  <body
+    class="h-full w-full overflow-x-hidden bg-transparent text-default text-base selection:bg-secondary selection:text-white"
+  >
+    <div id="container" class="absolute h-full w-full overflow-x-hidden">
+      <canvas
+        class="absolute h-full w-full overflow-hidden bg-transparent hover:blur-none"
+        id="canvas1"></canvas>
+
+      <audio
+        id="audio1"
+        controls
+        onloadedmetadata="this.volume = 0.5"
+        class="mt-150-auto block"></audio>
+      <!-- <audio id="audio1" controls  class="mt-150-auto block"></audio> -->
+      <!-- Add this in your HTML body where you want the UI element to appear -->
+      <div id="visualizerMenu">
+        <select id="visualizerSelect">
+          <option value="visualizer1">Visualizer 1</option>
+          <option value="visualizer2">Visualizer 2</option>
+          <option value="visualizer3">Visualizer 3</option>
+          <option value="visualizer4">Visualizer 4</option>
+          <option value="visualizer5">Visualizer 5</option>
+        </select>
+      </div>
+
+      <div class="white z-100 absolute py-2">
+        <input
+          class="bottom-10 block flex-auto bg-transparent font-black"
+          type="file"
+          id="fileupload"
+          accept="audio/*"
+        />
+      </div>
+
+      <!-- Playlist controls (Top right corner) -->
+      <div class="playlist-controls">
+        <button id="prevBtn" class="mdi mdi-skip-previous"></button>
+        <button id="playPauseBtn" class="mdi mdi-play"></button>
+        <button id="nextBtn" class="mdi mdi-skip-next"></button>
+        <ul id="playlist">
+          <!-- Playlist items will be generated here -->
+        </ul>
+      </div>
+    </div>
+
+    <script src="../../../components-fl1/part02/03/script.js"></script>
+  </body>
+</html>

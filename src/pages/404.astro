@@ -1,0 +1,22 @@
+---
+import BaseLayout from "~/layouts/Layout.astro";
+
+
+const { generator, site } = Astro;
+const image = new URL("vizhero.png", site);
+const description =
+  "Build fast Audio Visualisers with ArtechFuz3D.";
+---
+
+<BaseLayout title="404: Not Found">
+  <div class="text-center mt-16">
+    <img
+      alt={ "cover"}
+      class="rounded-lg w-24 h-24 md:h-40 md:w-40 mx-auto my-5"
+      src={''}
+    />
+    <h1 class="text-9xl font-bold mb-2">404</h1>
+    <h3 class="text-2xl">If you wait longer the page you want might appear...</h3>
+    <a class="btn btn-accent mt-9" href="/">Home</a>
+  </div>
+</BaseLayout>
