@@ -4,7 +4,8 @@ import "~/styles/index.css";
 
 const { generator, site } = Astro;
 const image = new URL("/thumb.png", site);
-const description = "Make Your Own Dinosaur & Fossil Themed Audio Visualisers with ArtechFuz3D";
+const description =
+  "Make Your Own Dinosaur & Fossil Themed Audio Visualisers with ArtechFuz3D";
 ---
 
 <!doctype html>
@@ -25,9 +26,26 @@ const description = "Make Your Own Dinosaur & Fossil Themed Audio Visualisers wi
     <meta property="og:url" content={site} />
     <meta name="twitter:card" content="summary_large_image" />
     <style>
+      body {
+        transition: background 0.5s ease; /* Smooth transition for background */
+
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        min-height: 100vh;
+      }
+
       #canvas1 {
-        background-color: rgb(0, 0, 0);
-        /* background: transparent; */
+        background: black;
+        /* background-color: transparent;  */
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
       }
 
       /* Styling for playlist controls */
@@ -142,7 +160,7 @@ const description = "Make Your Own Dinosaur & Fossil Themed Audio Visualisers wi
       }
       #toggleButton {
         width: 50px;
-        height: 50px;
+        height: 45px;
         /* background-color: rgb(40, 218, 99); */
         background: radial-gradient(circle, rgb(40, 218, 99), rgb(0, 0, 0));
         border: none;
@@ -156,45 +174,70 @@ const description = "Make Your Own Dinosaur & Fossil Themed Audio Visualisers wi
 
       #toggleButton.active {
         /* background-color: rgb(255, 0, 0); */
-        background: radial-gradient(circle, rgb(231, 15, 15), rgb(0, 0, 0));
-        width: 50px;
-        height: 50px;
+        background: radial-gradient(circle, rgb(231, 15, 15, 0.5), rgb(0, 0, 0, 0.5));
+
+        width: 55px;
+        height: 35px;
         border: none;
         border-radius: 50%;
         position: absolute;
         z-index: 55;
-        top: 30px;
-        right: 70px;
+        top: 10px;
+        right: 300px;
         cursor: pointer;
       }
 
       #blurButton {
         width: 50px;
-        height: 50px;
+        height: 45px;
         background: radial-gradient(circle, rgb(40, 218, 99), blue);
         border: none;
         border-radius: 50%;
         position: absolute;
         z-index: 55;
-        top: 100px;
-        right: 300px;
+        top: 30px;
+        right: 370px;
         cursor: pointer;
       }
 
       #blurButton.active {
-        background: radial-gradient(circle, rgb(185, 25, 185), blue);
-        top: 100px;
-        right: 70px;
+        background: radial-gradient(circle, rgb(185, 25, 185, 0.5), rgba(0, 0, 255, 0.5));
+        top: 10px;
+        right: 370px;
+        width: 55px;
+        height: 35px;
+      }
+
+      #toggleCanvasBackgroundBtn {
+        position: absolute;
+        width: 280px;
+        top: 90px;
+        left: auto;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 12px 10px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 8px;
+        /* transition: background-color 0.3s; */
+      }
+
+      #toggleCanvasBackgroundBtn:hover {
+        background-color: #45a049;
       }
     </style>
   </head>
   <body
-    class="h-full w-full overflow-x-hidden bg-transparent text-default text-base selection:bg-secondary selection:text-white"
+    class="h-full w-full overflow-x-hidden text-default text-base selection:bg-secondary selection:text-white"
   >
-    <button id="toggleButton"></button>
-    <button id="blurButton"></button>
+    <button id="toggleButton" class="text-sm font-bold text-black">UI</button>
+    <button id="blurButton" class="text-sm font-bold text-black">BLUR</button>
 
-    <div id="container" class="absolute h-full w-full overflow-x-hidden">
+    <div
+      id="container"
+      class="absolute h-full w-full overflow-x-hidden bg-transparent"
+    >
       <canvas
         class="absolute h-full w-full overflow-hidden bg-transparent hover:blur-none"
         id="canvas1"></canvas>
@@ -216,8 +259,9 @@ const description = "Make Your Own Dinosaur & Fossil Themed Audio Visualisers wi
           id="audio1"
           controls
           onloadedmetadata="this.volume = 0.5"
-          class="mt-150-auto block"></audio>
+          class="absolute top-0 left-1/2 transform -translate-x-1/2 mt-4"></audio>
         <!-- <audio id="audio1" controls  class="mt-150-auto block"></audio> -->
+
         <!-- Add this in your HTML body where you want the UI element to appear -->
         <div id="visualizerMenu">
           <select id="visualizerSelect">
@@ -230,13 +274,35 @@ const description = "Make Your Own Dinosaur & Fossil Themed Audio Visualisers wi
           </select>
         </div>
 
-        <div class="white z-100 absolute py-2">
+        <!-- UPLOAD BUTTONS -->
+        <div class="white z-100 w-[300px] h-[100px] bg-teal-600 absolute py-2">
+          <label>Choose Audio</label>
           <input
             class="bottom-10 block flex-auto bg-transparent font-black"
             type="file"
             id="fileupload"
             accept="audio/*"
           />
+        </div>
+
+        <!-- BG -->
+        <div
+          class="absolute left-0 top-36 z-50 h-[100px] w-[300px] rounded-md bg-cyan-700 bg-opacity-100 p-2 shadow backdrop-blur-md"
+        >
+          <h2 class="mb-0 text-left font-medium text-gray-800 text-sm">
+            Set Custom Background
+          </h2>
+          <input
+            class="block w-[280px] cursor-pointer rounded border border-gray-300 bg-transparent px-0 py-0 font-medium text-gray-800 text-xs hover:bg-slate-300"
+            type="file"
+            id="imageUpload"
+            accept="image/*"
+          />
+          <h3 class="mb-0 text-center font-medium text-gray-800 text-sm">.. and then</h3>
+
+          <button id="toggleCanvasBackgroundBtn"
+            >Toggle Background Transparency</button
+          >
         </div>
 
         <!-- Playlist controls (Top right corner) -->
@@ -250,6 +316,67 @@ const description = "Make Your Own Dinosaur & Fossil Themed Audio Visualisers wi
         </div>
       </div>
     </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const toggleCanvasBackgroundBtn = document.getElementById(
+          "toggleCanvasBackgroundBtn"
+        );
+        const canvas1 = document.getElementById("canvas1");
+
+        if (toggleCanvasBackgroundBtn && canvas1) {
+          toggleCanvasBackgroundBtn.addEventListener("click", function () {
+            // Toggle canvas background between black and transparent
+            if (canvas1.style.backgroundColor === "black") {
+              canvas1.style.backgroundColor = "transparent"; // Set background to transparent
+            } else {
+              canvas1.style.backgroundColor = "black"; // Set background to black
+            }
+          });
+        } else {
+          console.error("Required elements not found in the DOM.");
+        }
+      });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const imageUploadElement = document.getElementById("imageUpload");
+
+        if (imageUploadElement) {
+          imageUploadElement.addEventListener("change", function (event) {
+            const target = event.target as HTMLInputElement; // Explicitly cast to HTMLInputElement
+            const files = target?.files;
+
+            if (files && files[0]) {
+              const file = files[0];
+              const reader = new FileReader();
+
+              reader.onload = function (e) {
+                if (e?.target?.result) {
+                  // Set the uploaded image as the background
+                  document.body.style.backgroundImage = `url(${e.target.result})`;
+                  document.body.style.backgroundSize = "cover";
+                  document.body.style.backgroundPosition = "center";
+                  document.body.style.backgroundRepeat = "no-repeat";
+                } else {
+                  console.error("Failed to read the image file.");
+                }
+              };
+
+              reader.onerror = function () {
+                console.error("Error reading the file.");
+              };
+
+              reader.readAsDataURL(file);
+            } else {
+              console.error("No file selected or invalid file input.");
+            }
+          });
+        } else {
+          console.error("Image upload element not found.");
+        }
+      });
+    </script>
+
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         const toggleButton = document.getElementById("toggleButton");
