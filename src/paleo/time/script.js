@@ -1,14 +1,13 @@
-// main.js (or your original file)
-
 import playlist from '~/lib/songs.js';
 
 const file = document.getElementById("fileupload");
-// const container = document.getElementById("container");
+
 const rotationSlider = document.getElementById('rotation-slider');
 const canvas = document.getElementById("canvas1");
+const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-const ctx = canvas.getContext("2d");
+
 
 let audioSource;
 let analyser;
@@ -25,21 +24,11 @@ sprite2.src = "/dinopw.svg";
 
 const audio1 = document.getElementById("audio1");
 
-// // Playlist array (can be expanded)
-
-// const playlist = [
-//   "tracks/nirvana.mp3",
-//   "tracks/seagulls40.mp3",
-//   "tracks/rendezvouz.mp3",
-//   "tracks/youdontbringmeflowers.mp3",
-// ];
-
 let currentTrackIndex = 0;
 let isPlaying = false;
 
-// Function to update the audio source and play a new track
+
 function playTrack(index) {
-  // Set the audio source based on the playlist index
   audio1.src = playlist[index];
   audio1.load();
   audio1.play();
@@ -75,10 +64,7 @@ function playTrack(index) {
     x = 0;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     analyser.getByteFrequencyData(dataArray);
-    // drawVisualiser(bufferLength, x, barWidth, barHeight, dataArray);
-    // drawVisualiser2(bufferLength, x, barWidth, barHeight, dataArray);
-    // drawVisualiser3(bufferLength, x, barWidth, barHeight, dataArray);
-    // Use the selected visualizer
+
     if (currentVisualizer === "visualizer") {
       drawVisualiser(bufferLength, x, barWidth, barHeight, dataArray);
     } else if (currentVisualizer === "visualizer2") {

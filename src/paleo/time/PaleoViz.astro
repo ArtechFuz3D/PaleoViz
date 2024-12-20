@@ -4,7 +4,8 @@ import "~/styles/index.css";
 
 const { generator, site } = Astro;
 const image = new URL("/thumb.png", site);
-const description = "Make Your Own Dinosaur & Fossil Themed Audio Visualisers with ArtechFuz3D";
+const description =
+  "Make Your Own Dinosaur & Fossil Themed Audio Visualisers with ArtechFuz3D";
 ---
 
 <!doctype html>
@@ -25,9 +26,13 @@ const description = "Make Your Own Dinosaur & Fossil Themed Audio Visualisers wi
     <meta property="og:url" content={site} />
     <meta name="twitter:card" content="summary_large_image" />
     <style>
+      body {
+        background-color: transparent !important;
+      }
+
       #canvas1 {
-        background-color: rgb(0, 0, 0);
-        /* background: transparent; */
+        /* background-color: rgb(0, 0, 0, 0); */
+        /* background: transparent !important; */
       }
 
       /* Styling for playlist controls */
