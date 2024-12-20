@@ -18,10 +18,10 @@ let analyser;
 let currentVisualizer = "visualizer"; // Default visualizer
 
 const sprite = new Image();
-sprite.src = "dinow.svg";
+sprite.src = "/dinow.svg";
 
 const sprite2 = new Image();
-sprite2.src = "dinopw.svg";
+sprite2.src = "/dinopw.svg";
 
 const audio1 = document.getElementById("audio1");
 
