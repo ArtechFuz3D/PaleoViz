@@ -161,29 +161,28 @@ const description = "Build fast Audio Visualisers with ArtechFuz3D.";
         position: absolute;
         z-index: 55;
         top: 30px;
-        right: 50px;
+        right: 70px;
         cursor: pointer;
       }
 
       #blurButton {
-            width: 50px;
-            height: 50px;
-            background: radial-gradient(circle, rgb(40, 218, 99), blue);
-            border: none;
-            border-radius: 50%;
-            position: absolute;
-            z-index: 55;
-            top: 100px;
-            right: 300px;
-            cursor: pointer;
-        }
+        width: 50px;
+        height: 50px;
+        background: radial-gradient(circle, rgb(40, 218, 99), blue);
+        border: none;
+        border-radius: 50%;
+        position: absolute;
+        z-index: 55;
+        top: 100px;
+        right: 300px;
+        cursor: pointer;
+      }
 
-        #blurButton.active {
-            background: radial-gradient(circle, rgb(185, 25, 185), blue);
-            top: 100px;
-            right: 50px;
-        }
-
+      #blurButton.active {
+        background: radial-gradient(circle, rgb(185, 25, 185), blue);
+        top: 100px;
+        right: 70px;
+      }
     </style>
   </head>
   <body
@@ -200,7 +199,7 @@ const description = "Build fast Audio Visualisers with ArtechFuz3D.";
       <!-- Editor -->
       <div id="editor">
         <div class="slider-container">
-          <label for="rotation-slider">Adjust:</label>
+          <label for="rotation-slider">Adjust Parameter:</label>
           <input
             id="rotation-slider"
             type="range"
@@ -265,24 +264,25 @@ const description = "Build fast Audio Visualisers with ArtechFuz3D.";
       });
     </script>
     <script>
-      document.addEventListener('DOMContentLoaded', () => {
-    const blurButton = document.getElementById('blurButton');
-    const canvas1 = document.getElementById('canvas1');
+      document.addEventListener("DOMContentLoaded", () => {
+        const blurButton = document.getElementById("blurButton");
+        const canvas1 = document.getElementById("canvas1");
 
-    if (blurButton && canvas1) {
-        blurButton.addEventListener('click', () => {
-            if (canvas1.style.filter === 'blur(8px) contrast(10)') {
-                canvas1.style.filter = '';
+        if (blurButton && canvas1) {
+          blurButton.addEventListener("click", () => {
+            if (canvas1.style.filter === "blur(8px) contrast(10)") {
+              canvas1.style.filter = "";
             } else {
-                canvas1.style.filter = 'blur(8px) contrast(10)';
+              canvas1.style.filter = "blur(8px) contrast(10)";
             }
-            blurButton.classList.toggle('active');
-        });
-    } else {
-        console.error('Required elements not found in the DOM for blurButton.');
-    }
-});
-
+            blurButton.classList.toggle("active");
+          });
+        } else {
+          console.error(
+            "Required elements not found in the DOM for blurButton."
+          );
+        }
+      });
     </script>
     <script src="../../paleo/time/script.js"></script>
   </body>
