@@ -1,5 +1,10 @@
+// main.js (or your original file)
+
+import playlist from '~/lib/songs.js';
+
 const file = document.getElementById("fileupload");
-const container = document.getElementById("container");
+// const container = document.getElementById("container");
+const rotationSlider = document.getElementById('rotation-slider');
 const canvas = document.getElementById("canvas1");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -8,26 +13,26 @@ const ctx = canvas.getContext("2d");
 let audioSource;
 let analyser;
 
+
 // Initialize the visualizer mode variable
-let currentVisualizer = 'visualizer'; // Default visualizer
+let currentVisualizer = "visualizer"; // Default visualizer
 
 const sprite = new Image();
 sprite.src = "dinow.svg";
 
 const sprite2 = new Image();
 sprite2.src = "dinopw.svg";
-const sprite3 = new Image();
-sprite3.src = "brex.svg";
 
 const audio1 = document.getElementById("audio1");
 
-// Playlist array (can be expanded)
-const playlist = [
-  "tracks/nirvana.mp3",
-  "tracks/seagulls40.mp3",
-  "tracks/rendezvouz.mp3",
-  "tracks/youdontbringmeflowers.mp3",
-];
+// // Playlist array (can be expanded)
+
+// const playlist = [
+//   "tracks/nirvana.mp3",
+//   "tracks/seagulls40.mp3",
+//   "tracks/rendezvouz.mp3",
+//   "tracks/youdontbringmeflowers.mp3",
+// ];
 
 let currentTrackIndex = 0;
 let isPlaying = false;
@@ -74,27 +79,31 @@ function playTrack(index) {
     // drawVisualiser2(bufferLength, x, barWidth, barHeight, dataArray);
     // drawVisualiser3(bufferLength, x, barWidth, barHeight, dataArray);
     // Use the selected visualizer
-  if (currentVisualizer === 'visualizer') {
-    drawVisualiser(bufferLength, x, barWidth, barHeight, dataArray);
-  } else if (currentVisualizer === 'visualizer2') {
-    drawVisualiser2(bufferLength, x, barWidth, barHeight, dataArray);
-  } else if (currentVisualizer === 'visualizer3') {
-    drawVisualiser3(bufferLength, x, barWidth, barHeight, dataArray);
-  } else if (currentVisualizer === 'visualizer4') {
-    drawVisualiser4(bufferLength, x, barWidth, barHeight, dataArray);
-  } else if (currentVisualizer === 'visualizer5') {
-    drawVisualiser5(bufferLength, x, barWidth, barHeight, dataArray);
-  }
+    if (currentVisualizer === "visualizer") {
+      drawVisualiser(bufferLength, x, barWidth, barHeight, dataArray);
+    } else if (currentVisualizer === "visualizer2") {
+      drawVisualiser2(bufferLength, x, barWidth, barHeight, dataArray);
+    } else if (currentVisualizer === "visualizer3") {
+      drawVisualiser3(bufferLength, x, barWidth, barHeight, dataArray);
+    } else if (currentVisualizer === "visualizer4") {
+      drawVisualiser4(bufferLength, x, barWidth, barHeight, dataArray);
+    } else if (currentVisualizer === "visualizer5") {
+      drawVisualiser5(bufferLength, x, barWidth, barHeight, dataArray);
+    } else if (currentVisualizer === "visualizer6") {
+      drawVisualiser6(bufferLength, x, barWidth, barHeight, dataArray);
+    }
     requestAnimationFrame(animate);
   }
   animate();
 }
 
 // Function to update the visualizer based on selection
-document.getElementById("visualizerSelect").addEventListener("change", function(event) {
-  currentVisualizer = event.target.value;  // Set selected visualizer
-  playTrack(currentTrackIndex); // Restart the track to apply the new visualizer
-});
+document
+  .getElementById("visualizerSelect")
+  .addEventListener("change", function (event) {
+    currentVisualizer = event.target.value; // Set selected visualizer
+    playTrack(currentTrackIndex); // Restart the track to apply the new visualizer
+  });
 
 // Playlist navigation functions
 document.getElementById("nextBtn").addEventListener("click", function () {
@@ -151,6 +160,7 @@ file.addEventListener("change", function () {
     drawVisualiser3(bufferLength, x, barWidth, barHeight, dataArray);
     drawVisualiser4(bufferLength, x, barWidth, barHeight, dataArray);
     drawVisualiser5(bufferLength, x, barWidth, barHeight, dataArray);
+    drawVisualiser6(bufferLength, x, barWidth, barHeight, dataArray);
     requestAnimationFrame(animate);
   }
   animate();
@@ -175,12 +185,21 @@ generatePlaylist();
 playTrack(currentTrackIndex);
 
 
-function drawVisualiser(bufferLength, x, barWidth, barHeight, dataArray) {
+// ui functionality for rotate control
+let rotationFactor = parseFloat(rotationSlider.value);
+
+rotationSlider.addEventListener('input', () => {
+  rotationFactor = parseFloat(rotationSlider.value);
+  drawVisualiser(bufferLength, x, barWidth, barHeight, dataArray); // Redraw on slider change
+});
+
+function drawVisualiser(bufferLength, x, barWidth, barHeight, dataArray, rotationFactor) {
   for (let i = 0; i < bufferLength; i++) {
     barHeight = dataArray[i] * 1.1;
     ctx.save();
     ctx.translate(canvas.width / 2, canvas.height / 2);
-    ctx.rotate(i * 1.6180339887);
+    ctx.rotate(i * 1.6180339887 );
+
     ctx.drawImage(sprite, 0, barHeight, barHeight / 2.5, barHeight / 2.5);
     x += barWidth;
     ctx.restore();
@@ -197,27 +216,121 @@ function drawVisualiser(bufferLength, x, barWidth, barHeight, dataArray) {
 }
 
 function drawVisualiser2(bufferLength, x, barWidth, barHeight, dataArray) {
+  // Calculate the available space per bar, based on canvas width
+  const totalWidth = canvas.width; // Assuming a horizontal layout
+  const spacing = (totalWidth - bufferLength * barWidth) / (bufferLength - 40); // Equal spacing between bars
+
+  // Draw on the left side
   for (let i = 0; i < bufferLength; i++) {
-    barHeight = dataArray[i] * 1.4;
+    barHeight = dataArray[i] + canvas.height / 4;
+
+    // Position for horizontal display on the left
+    const posX = canvas.width / 2 - x; // Mirror position on the left
+    const posY = canvas.height;
+
+    // Save the context state
     ctx.save();
-    ctx.translate(canvas.width / 2, canvas.height / 2);
-    ctx.rotate(((i * Math.PI * 10) / bufferLength) * 4);
 
-    const hue = 250 + i * 0.3;
-    ctx.fillStyle = "hsl(" + hue + ",100%," + barHeight / 3 + "%)";
-    ctx.fillRect(0, 0, barWidth, barHeight);
+    // Center and rotate the context for each image
+    ctx.translate(posX, posY);
+    ctx.drawImage(
+      sprite2,
+      -barHeight / 2.5, // Center the image horizontally
+      -barHeight / 2.5, // Center the image vertically
+      barHeight / 2.5, // Scale width of the bone
+      barHeight / 2.5, // Scale height of the bone
+    );
 
-    x += barWidth;
+    // Restore the context state
     ctx.restore();
+
+    // Increment x for the next position
+    x += barWidth + spacing * rotationFactor; // Dynamically calculated spacing
+  }
+
+  // Reset x for the right side
+  x = barWidth + spacing;
+
+  // Draw on the right side
+  for (let i = 0; i < bufferLength; i++) {
+    barHeight = dataArray[i] + canvas.height / 4;
+
+    // Position for horizontal display on the right
+    const posX = canvas.width / 2 + x; // Mirror position on the right
+    const posY = canvas.height;
+
+    // Save the context state
+    ctx.save();
+
+    // Center and rotate the context for each image
+    ctx.translate(posX, posY);
+    ctx.drawImage(
+      sprite2,
+      -barHeight / 2.5, // Center the image horizontally
+      -barHeight / 2.5, // Center the image vertically
+      barHeight / 2.5, // Scale width of the bone
+      barHeight / 2.5, // Scale height of the bone
+    );
+
+    // Restore the context state
+    ctx.restore();
+
+    // Increment x for the next position
+    x += barWidth + spacing * rotationFactor; // Dynamically calculated spacing
   }
 }
 
 function drawVisualiser3(bufferLength, x, barWidth, barHeight, dataArray) {
   for (let i = 0; i < bufferLength; i++) {
+    // move up screen
+    barHeight = dataArray[i] + canvas.height / 4;
+    // barHeight =  dataArray[i]
+    // const red = 100
+    const red = (i * barHeight  * rotationFactor) / 20;
+    // const green = 100
+    const green = i  * rotationFactor;
+    // const blue = Math.random(i * barHeight/4)
+    const blue = barHeight   / rotationFactor;
+    ctx.fillStyle = "white";
+    ctx.fillRect(
+      canvas.width / 2 - x,
+      canvas.height - (barHeight) - 30,
+      barWidth,
+      20,
+    );
+    ctx.fillStyle = "rgb(" + red + "," + green + "," + blue + ")";
+    ctx.fillRect(
+      canvas.width / 2 - x,
+      canvas.height - barHeight,
+      barWidth,
+      barHeight,
+    );
+    x += barWidth;
+  }
+  for (let i = 0; i < bufferLength; i++) {
+    // barHeight = dataArray[i]
+    barHeight = dataArray[i] + canvas.height / 4;
+    // const red = 100
+    const red = (i * barHeight  * rotationFactor) / 20;
+    // const green = 100
+    const green = i  * rotationFactor;
+    // const blue = Math.random(i * barHeight/4)
+    const blue = barHeight   / rotationFactor;
+    // ctx.fillStyle = 'white'
+    ctx.fillStyle = "white";
+    ctx.fillRect(x, canvas.height - barHeight - 30, barWidth, 20);
+    ctx.fillStyle = "rgb(" + red + "," + green + "," + blue + ")";
+    ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+    x += barWidth;
+  }
+}
+
+function drawVisualiser4(bufferLength, x, barWidth, barHeight, dataArray) {
+  for (let i = 0; i < bufferLength; i++) {
     barHeight = dataArray[i];
     ctx.save();
     ctx.translate(canvas.width / 2, canvas.height / 2);
-    ctx.rotate(i * 2.2);
+    ctx.rotate(i * 2.2  * rotationFactor);
 
     ctx.shadowBlur = 50;
     // const hue = 200 + i * 0.3
@@ -248,168 +361,33 @@ function drawVisualiser3(bufferLength, x, barWidth, barHeight, dataArray) {
   }
 }
 
-function drawVisualiser4(bufferLength, x, barWidth, barHeight, dataArray) {
-  // Calculate the available space per bar, based on canvas width
-  const totalWidth = canvas.width; // Assuming a horizontal layout
-  const spacing = (totalWidth - (bufferLength * barWidth)) / (bufferLength - 40); // Equal spacing between bars
-
-  // Draw on the left side
-  for (let i = 0; i < bufferLength; i++) {
-      barHeight = dataArray[i] + (canvas.height / 4);
-
-      // Position for horizontal display on the left
-      const posX = canvas.width / 2 - x; // Mirror position on the left
-      const posY = canvas.height;
-
-      // Save the context state
-      ctx.save();
-
-      // Center and rotate the context for each image
-      ctx.translate(posX, posY);
-      ctx.drawImage(
-          sprite2,
-          -barHeight / 2.5, // Center the image horizontally
-          -barHeight / 2.5, // Center the image vertically
-          barHeight / 2.5, // Scale width of the bone
-          barHeight / 2.5 // Scale height of the bone
-      );
-
-      // Restore the context state
-      ctx.restore();
-
-      // Increment x for the next position
-      x += barWidth + spacing; // Dynamically calculated spacing
-  }
-
-  // Reset x for the right side
-  x = barWidth + spacing;
-
-  // Draw on the right side
-  for (let i = 0; i < bufferLength; i++) {
-      barHeight = dataArray[i] + (canvas.height / 4);
-
-      // Position for horizontal display on the right
-      const posX = canvas.width / 2 + x; // Mirror position on the right
-      const posY = canvas.height;
-
-      // Save the context state
-      ctx.save();
-
-      // Center and rotate the context for each image
-      ctx.translate(posX, posY);
-      ctx.drawImage(
-          sprite2,
-          -barHeight / 2.5, // Center the image horizontally
-          -barHeight / 2.5, // Center the image vertically
-          barHeight / 2.5, // Scale width of the bone
-          barHeight / 2.5 // Scale height of the bone
-      );
-
-      // Restore the context state
-      ctx.restore();
-
-      // Increment x for the next position
-      x += barWidth + spacing; // Dynamically calculated spacing
-  }
-}
-
-
-// function drawVisualiser4(bufferLength, x, barWidth, barHeight, dataArray) {
-//   // Calculate the available space per bar, based on canvas width
-//   const totalWidth = canvas.width; // Assuming a horizontal layout
-//   const spacing = (totalWidth - (bufferLength * barWidth)) / (bufferLength - 1); // Equal spacing between bars
-
-//   for (let i = 0; i < bufferLength; i++) {
-//       barHeight = dataArray[i] + (canvas.height / 4);
-
-//       // Position for horizontal display
-//       const posX = x;
-//       const posY = canvas.height;
-
-//       // Save the context state
-//       ctx.save();
-
-//       // Center and rotate the context for each image
-//       ctx.translate(posX, posY);
-//       ctx.drawImage(
-//           sprite2,
-//           -barHeight / 2.5, // Center the image horizontally
-//           -barHeight / 2.5, // Center the image vertically
-//           barHeight / 2.5, // Scale width of the bone
-//           barHeight / 2.5 // Scale height of the bone
-//       );
-
-//       // Restore the context state
-//       ctx.restore();
-
-//       // Increment x for the next bone position
-//       x += barWidth + spacing * 4; // Dynamically calculated spacing
-//   }
-// }
-
-
-// function drawVisualiser4(bufferLength, x, barWidth, barHeight, dataArray) {
-//   for (let i = 0; i < bufferLength; i++) {
-//       barHeight = dataArray[i] + (canvas.height / 4);
-
-//       // Position for horizontal display
-//       const posX = x ;
-//       const posY = canvas.height / 2;
-
-//       // Save the context state
-//       ctx.save();
-
-//       // Center and rotate the context for each image
-//       ctx.translate(posX, posY);
-//       // ctx.rotate(i * 0.1); // Small angle rotation for horizontal positioning
-//       ctx.drawImage(
-//           sprite,
-//           -barHeight / 2.5, // Center the image horizontally
-//           -barHeight / 2.5, // Center the image vertically
-//           barHeight / 2.5, // Scale width of the bone
-//           barHeight / 2.5 // Scale height of the bone
-//       );
-
-//       // Restore the context state
-//       ctx.restore();
-
-//       // Increment x for the next bone position
-//       x += barWidth + 25; // Adjust spacing between bones
-//   }
-
-// }
-
-//
-//
-
 function drawVisualiser5(bufferLength, x, barWidth, barHeight, dataArray) {
-
   for (let i = 0; i < bufferLength; i++) {
     // remove this first if statement to default to tutorial
     // if (i < bufferLength * 0.8){
-    barHeight = dataArray[i] * 2
-    ctx.save()
+    barHeight = dataArray[i] * 2;
+    ctx.save();
     ctx.translate(canvas.width / 2, canvas.height / 2);
     ctx.rotate(i * 3.2);
     // const hue = 200 + i * 0.3
-    const hue = 200 + i * 3
-    ctx.strokeStyle = 'hsl(' + hue + ',100%,' + barHeight/3 + '%)'
+    const hue = 200 + i * 3;
+    ctx.strokeStyle = "hsl(" + hue + ",100%," + barHeight / 3 + "%)";
     // ctx.fillRect(0,0,barWidth,barHeight)
-    ctx.beginPath()
-    ctx.moveTo(0,0)
-    ctx.lineTo(0,barHeight)
-    ctx.stroke()
-    x += barWidth
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(0, barHeight);
+    ctx.stroke();
+    x += barWidth;
     // }
     // as cycle through bufferlength, if i is more than bufferlength times 0.6, this will only run last 40% of data arry, ie lower frequencies
     // if (i > bufferLength * 0.2){ // this multipolication value will neeed adjusting based on song
     // if (i > bufferLength * 0.5){
     // if (i > bufferLength * 0.62 && i > bufferLength * 0.61){
-    if (i > bufferLength * 0.55 ){ // targets specific freq
-      ctx.beginPath()
-      ctx.arc(0, 0, barHeight/1.5, 0, Math.PI * 2)
-      ctx.stroke()
-
+    if (i > bufferLength * 0.55) {
+      // targets specific freq
+      ctx.beginPath();
+      ctx.arc(0, 0, barHeight / 1.5, 0, Math.PI * 2);
+      ctx.stroke();
     }
     // if (i < bufferLength * 0.4){
     //   ctx.beginPath()
@@ -417,6 +395,22 @@ function drawVisualiser5(bufferLength, x, barWidth, barHeight, dataArray) {
     //   ctx.stroke()
 
     // }
+    ctx.restore();
+  }
+}
+
+function drawVisualiser6(bufferLength, x, barWidth, barHeight, dataArray) {
+  for (let i = 0; i < bufferLength; i++) {
+    barHeight = dataArray[i] * 1.4;
+    ctx.save();
+    ctx.translate(canvas.width / 2, canvas.height / 2);
+    ctx.rotate(((i * Math.PI * 10) / bufferLength) * 4);
+
+    const hue = 250 + i * 0.3;
+    ctx.fillStyle = "hsl(" + hue + ",100%," + barHeight / 3 + "%)";
+    ctx.fillRect(0, 0, barWidth, barHeight);
+
+    x += barWidth;
     ctx.restore();
   }
 }
