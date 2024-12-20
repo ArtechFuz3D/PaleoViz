@@ -134,65 +134,156 @@ const description = "Build fast Audio Visualisers with ArtechFuz3D.";
           sans-serif,
           sans-serif;
       }
+      .hidden {
+        visibility: hidden;
+      }
+      #toggleButton {
+        width: 50px;
+        height: 50px;
+        /* background-color: rgb(40, 218, 99); */
+        background: radial-gradient(circle, rgb(40, 218, 99), rgb(0, 0, 0));
+        border: none;
+        border-radius: 50%;
+        position: absolute;
+        z-index: 55;
+        top: 30px;
+        right: 300px;
+        cursor: pointer;
+      }
+
+      #toggleButton.active {
+        /* background-color: rgb(255, 0, 0); */
+        background: radial-gradient(circle, rgb(231, 15, 15), rgb(0, 0, 0));
+        width: 50px;
+        height: 50px;
+        border: none;
+        border-radius: 50%;
+        position: absolute;
+        z-index: 55;
+        top: 30px;
+        right: 80px;
+        cursor: pointer;
+      }
+
+      #blurButton {
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, rgb(40, 218, 99), blue);
+            border: none;
+            border-radius: 50%;
+            position: absolute;
+            z-index: 55;
+            top: 100px;
+            right: 300px;
+            cursor: pointer;
+        }
+
+        #blurButton.active {
+            background: radial-gradient(circle, rgb(185, 25, 185), blue);
+            top: 100px;
+            right: 80px;
+        }
+
     </style>
   </head>
   <body
     class="h-full w-full overflow-x-hidden bg-transparent text-default text-base selection:bg-secondary selection:text-white"
   >
+    <button id="toggleButton"></button>
+    <button id="blurButton"></button>
+
     <div id="container" class="absolute h-full w-full overflow-x-hidden">
       <canvas
         class="absolute h-full w-full overflow-hidden bg-transparent hover:blur-none"
         id="canvas1"></canvas>
+
       <!-- Editor -->
-      <div class="slider-container">
-        <label for="rotation-slider">Adjust:</label>
-        <input
-          id="rotation-slider"
-          type="range"
-          min="0"
-          max="10"
-          step="0.01"
-          value="1.618"
-        />
-      </div>
-      <audio
-        id="audio1"
-        controls
-        onloadedmetadata="this.volume = 0.5"
-        class="mt-150-auto block"></audio>
-      <!-- <audio id="audio1" controls  class="mt-150-auto block"></audio> -->
-      <!-- Add this in your HTML body where you want the UI element to appear -->
-      <div id="visualizerMenu">
-        <select id="visualizerSelect">
-          <option value="visualizer">Visualizer 1</option>
-          <option value="visualizer2">Visualizer 2</option>
-          <option value="visualizer3">Visualizer 3</option>
-          <option value="visualizer4">Visualizer 4</option>
-          <option value="visualizer5">Visualizer 5</option>
-          <option value="visualizer6">Visualizer 6</option>
-        </select>
-      </div>
+      <div id="editor">
+        <div class="slider-container">
+          <label for="rotation-slider">Adjust:</label>
+          <input
+            id="rotation-slider"
+            type="range"
+            min="0"
+            max="10"
+            step="0.01"
+            value="1.618"
+          />
+        </div>
+        <audio
+          id="audio1"
+          controls
+          onloadedmetadata="this.volume = 0.5"
+          class="mt-150-auto block"></audio>
+        <!-- <audio id="audio1" controls  class="mt-150-auto block"></audio> -->
+        <!-- Add this in your HTML body where you want the UI element to appear -->
+        <div id="visualizerMenu">
+          <select id="visualizerSelect">
+            <option value="visualizer">Visualizer 1</option>
+            <option value="visualizer2">Visualizer 2</option>
+            <option value="visualizer3">Visualizer 3</option>
+            <option value="visualizer4">Visualizer 4</option>
+            <option value="visualizer5">Visualizer 5</option>
+            <option value="visualizer6">Visualizer 6</option>
+          </select>
+        </div>
 
-      <div class="white z-100 absolute py-2">
-        <input
-          class="bottom-10 block flex-auto bg-transparent font-black"
-          type="file"
-          id="fileupload"
-          accept="audio/*"
-        />
-      </div>
+        <div class="white z-100 absolute py-2">
+          <input
+            class="bottom-10 block flex-auto bg-transparent font-black"
+            type="file"
+            id="fileupload"
+            accept="audio/*"
+          />
+        </div>
 
-      <!-- Playlist controls (Top right corner) -->
-      <div class="playlist-controls">
-        <button id="prevBtn" class="mdi mdi-skip-previous"></button>
-        <button id="playPauseBtn" class="mdi mdi-play"></button>
-        <button id="nextBtn" class="mdi mdi-skip-next"></button>
-        <ul id="playlist">
-          <!-- Playlist items will be generated here -->
-        </ul>
+        <!-- Playlist controls (Top right corner) -->
+        <div class="playlist-controls">
+          <button id="prevBtn" class="mdi mdi-skip-previous"></button>
+          <button id="playPauseBtn" class="mdi mdi-play"></button>
+          <button id="nextBtn" class="mdi mdi-skip-next"></button>
+          <ul id="playlist">
+            <!-- Playlist items will be generated here -->
+          </ul>
+        </div>
       </div>
     </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const toggleButton = document.getElementById("toggleButton");
+        const editor = document.getElementById("editor");
 
+        if (toggleButton && editor) {
+          toggleButton.addEventListener("click", () => {
+            // Toggle the 'hidden' class on the container
+            editor.classList.toggle("hidden");
+            toggleButton.classList.toggle("active");
+          });
+        } else {
+          console.error("Required elements not found in the DOM.");
+        }
+      });
+    </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+    const blurButton = document.getElementById('blurButton');
+    const canvas1 = document.getElementById('canvas1');
+
+    if (blurButton && canvas1) {
+        blurButton.addEventListener('click', () => {
+            if (canvas1.style.filter === 'blur(8px) contrast(10)') {
+                canvas1.style.filter = '';
+            } else {
+                canvas1.style.filter = 'blur(8px) contrast(10)';
+            }
+            blurButton.classList.toggle('active');
+        });
+    } else {
+        console.error('Required elements not found in the DOM for blurButton.');
+    }
+});
+
+    </script>
     <script src="../../paleo/time/script.js"></script>
   </body>
 </html>

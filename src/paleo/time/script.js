@@ -222,11 +222,42 @@ function drawVisualiser2(bufferLength, x, barWidth, barHeight, dataArray) {
 
   // Draw on the left side
   for (let i = 0; i < bufferLength; i++) {
-    barHeight = dataArray[i] + canvas.height / 4;
+    barHeight = dataArray[i]  ;
 
     // Position for horizontal display on the left
-    const posX = canvas.width / 2 - x; // Mirror position on the left
-    const posY = canvas.height;
+    const posX = canvas.width / 2 - x -50; // Mirror position on the left
+    const posY = canvas.height  - canvas.height * 0.25;
+
+    // Save the context state
+    ctx.save();
+
+    // Center and rotate the context for each image
+    ctx.translate(posX, posY);
+    ctx.drawImage(
+      sprite2,
+      -barHeight / 2.5, // Center the image horizontally
+      -barHeight / 2.5, // Center the image vertically
+      barHeight / 2.5, // Scale width of the bone
+      barHeight / 2.5, // Scale height of the bone
+    );
+
+    // Restore the context state
+    ctx.restore();
+
+    // Increment x for the next position
+    x += barWidth + spacing * rotationFactor; // Dynamically calculated spacing
+  }
+
+  // Reset x for the right side
+  x = barWidth + spacing;
+
+  // Draw on the left side double
+  for (let i = 0; i < bufferLength; i++) {
+    barHeight = dataArray[i]  ;
+
+    // Position for horizontal display on the left
+    const posX = canvas.width / 2 - x -50; // Mirror position on the left
+    const posY = canvas.height  - canvas.height * 0.15;
 
     // Save the context state
     ctx.save();
@@ -253,11 +284,41 @@ function drawVisualiser2(bufferLength, x, barWidth, barHeight, dataArray) {
 
   // Draw on the right side
   for (let i = 0; i < bufferLength; i++) {
-    barHeight = dataArray[i] + canvas.height / 4;
+    barHeight = dataArray[i] + canvas.height ;
 
     // Position for horizontal display on the right
-    const posX = canvas.width / 2 + x; // Mirror position on the right
-    const posY = canvas.height;
+    const posX = canvas.width - x +350; // Mirror position on the right
+    const posY = canvas.height - canvas.height * 0.3;
+
+    // Save the context state
+    ctx.save();
+
+    // Center and rotate the context for each image
+    ctx.translate(posX, posY);
+    ctx.drawImage(
+      sprite2,
+      -barHeight / 2.5, // Center the image horizontally
+      -barHeight / 2.5, // Center the image vertically
+      barHeight / 2.5, // Scale width of the bone
+      barHeight / 2.5, // Scale height of the bone
+    );
+
+    // Restore the context state
+    ctx.restore();
+
+    // Increment x for the next position
+    x += barWidth + spacing * 4 + rotationFactor; // Dynamically calculated spacing
+  }
+  // Reset x for the right side
+  x = barWidth + spacing;
+
+  // Draw on the right side double
+  for (let i = 0; i < bufferLength; i++) {
+    barHeight = dataArray[i] + canvas.height * 0.25;
+
+    // Position for horizontal display on the right
+    const posX = canvas.width / 2 + x +50; // Mirror position on the right
+    const posY = canvas.height - canvas.height * 0.15;
 
     // Save the context state
     ctx.save();
