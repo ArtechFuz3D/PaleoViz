@@ -6,7 +6,7 @@ import svelte from "@astrojs/svelte";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://paleontology-audio-visualiser.artechfuz3d.app/",
+  site: "https://paleontological-audio-visualiser.artechfuz3d.xyz/",
   // root: "./src",
   integrations: [tailwind(), icon(), react(), svelte()],
   sets: {
