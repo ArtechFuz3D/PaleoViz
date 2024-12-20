@@ -10,8 +10,8 @@ import Splash from "~/components/splash.astro";
 import "~/styles/index.css";
 
 const { generator, site } = Astro;
-const image = new URL("vizhero.png", site);
-const description = "Build fast Audio Visualisers with ArtechFuz3D.";
+const image = new URL("/thumb.png", site);
+const description = "Make Your Own Dinosaur & Fossil Themed Audio Visualisers with ArtechFuz3D";
 ---
 
 <!doctype html>
@@ -22,11 +22,11 @@ const description = "Build fast Audio Visualisers with ArtechFuz3D.";
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="generator" content={generator} />
 
-    <title>Paleo Visualiser</title>
+    <title>Paleontological Audio Visualiser</title>
     <meta name="description" content={description} />
 
     <!-- social media -->
-    <meta property="og:title" content="Paleo Visualiser" />
+    <meta property="og:title" content="Paleontological Audio Visualiser" />
     <meta property="og:type" content="website" />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={image} />

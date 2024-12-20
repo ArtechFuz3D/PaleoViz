@@ -3,8 +3,8 @@ import "@fontsource-variable/inter";
 import "~/styles/index.css";
 
 const { generator, site } = Astro;
-const image = new URL("dinow.svg", site);
-const description = "Build fast Audio Visualisers with ArtechFuz3D.";
+const image = new URL("/thumb.png", site);
+const description = "Make Your Own Dinosaur & Fossil Themed Audio Visualisers with ArtechFuz3D";
 ---
 
 <!doctype html>
@@ -19,8 +19,11 @@ const description = "Build fast Audio Visualisers with ArtechFuz3D.";
       href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css"
       rel="stylesheet"
     />
-    <title>Paleontological Themed Audio Visualiser</title>
+    <title>Paleontological Audio Visualiser</title>
     <meta name="description" content={description} />
+    <meta property="og:image" content={image} />
+    <meta property="og:url" content={site} />
+    <meta name="twitter:card" content="summary_large_image" />
     <style>
       #canvas1 {
         background-color: rgb(0, 0, 0);

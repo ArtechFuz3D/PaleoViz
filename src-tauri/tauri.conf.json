@@ -2,7 +2,7 @@
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
   "productName": "astro-landing-page",
   "version": "0.1.0",
-  "identifier": "com.tauri.dev",
+  "identifier": "xyz.artechfuz3d.paleontological-audio-visualiser",
   "build": {
     "frontendDist": "../dist",
     "devUrl": "http://localhost:4321",
@@ -12,11 +12,12 @@
   "app": {
     "windows": [
       {
-        "title": "astro-landing-page",
+        "title": "Paleontological Audio Visualiser",
         "width": 800,
         "height": 600,
         "resizable": true,
-        "fullscreen": false
+        "fullscreen": false,
+        "transparent": true
       }
     ],
     "security": {
