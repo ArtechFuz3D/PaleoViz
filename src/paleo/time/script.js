@@ -155,7 +155,7 @@ file.addEventListener("change", function () {
     x = 0;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     analyser.getByteFrequencyData(dataArray);
-    drawVisualiser(bufferLength, x, barWidth, barHeight, dataArray);
+    drawVisualiser(bufferLength, x, barWidth, barHeight, dataArray, );
     drawVisualiser2(bufferLength, x, barWidth, barHeight, dataArray);
     drawVisualiser3(bufferLength, x, barWidth, barHeight, dataArray);
     drawVisualiser4(bufferLength, x, barWidth, barHeight, dataArray);
@@ -190,15 +190,23 @@ let rotationFactor = parseFloat(rotationSlider.value);
 
 rotationSlider.addEventListener('input', () => {
   rotationFactor = parseFloat(rotationSlider.value);
+  drawVisualiser2(bufferLength, x, barWidth, barHeight, dataArray); // Redraw on slider change
+  drawVisualiser3(bufferLength, x, barWidth, barHeight, dataArray); // Redraw on slider change
+  drawVisualiser4(bufferLength, x, barWidth, barHeight, dataArray); // Redraw on slider change
+  drawVisualiser5(bufferLength, x, barWidth, barHeight, dataArray); // Redraw on slider change
+  drawVisualiser6(bufferLength, x, barWidth, barHeight, dataArray); // Redraw on slider change
   drawVisualiser(bufferLength, x, barWidth, barHeight, dataArray); // Redraw on slider change
+
 });
 
-function drawVisualiser(bufferLength, x, barWidth, barHeight, dataArray, rotationFactor) {
+function drawVisualiser(bufferLength, x, barWidth, barHeight, dataArray) {
   for (let i = 0; i < bufferLength; i++) {
-    barHeight = dataArray[i] * 1.1;
+    barHeight = dataArray[i];
+    let rotationFactor = parseFloat(rotationSlider.value);
     ctx.save();
     ctx.translate(canvas.width / 2, canvas.height / 2);
-    ctx.rotate(i * 1.6180339887 );
+    // ctx.rotate(i * 1.6180339887 );
+    ctx.rotate(i / rotationFactor);
 
     ctx.drawImage(sprite, 0, barHeight, barHeight / 2.5, barHeight / 2.5);
     x += barWidth;
@@ -206,14 +214,40 @@ function drawVisualiser(bufferLength, x, barWidth, barHeight, dataArray, rotatio
   }
 
   let size = dataArray[15] * 1.5 > 100 ? dataArray[15] : 100;
+  
   ctx.drawImage(
     sprite,
-    canvas.width / 2 - size / 2,
+    canvas.width / 2 - size / 2 ,
     canvas.height / 2 - size / 2,
     size,
     size,
   );
 }
+
+// function drawVisualiser(bufferLength, x, barWidth, barHeight, dataArray, rotationFactor) {
+//   for (let i = 0; i < bufferLength; i++) {
+//     barHeight = dataArray[i];
+
+//     ctx.save();
+//     ctx.translate(canvas.width / 2, canvas.height / 2);
+//     ctx.rotate(i * 1.6180339887 );
+//     // ctx.rotate(i * 0.1  * rotationFactor);
+
+//     ctx.drawImage(sprite, 0, barHeight, barHeight / 2.5, barHeight / 2.5);
+//     x += barWidth;
+//     ctx.restore();
+//   }
+
+//   let size = dataArray[15] * 1.5 > 100 ? dataArray[15] : 100;
+  
+//   ctx.drawImage(
+//     sprite,
+//     canvas.width / 2 - size / 2 ,
+//     canvas.height / 2 - size / 2,
+//     size,
+//     size,
+//   );
+// }
 
 function drawVisualiser2(bufferLength, x, barWidth, barHeight, dataArray) {
   // Calculate the available space per bar, based on canvas width
@@ -475,3 +509,28 @@ function drawVisualiser6(bufferLength, x, barWidth, barHeight, dataArray) {
     ctx.restore();
   }
 }
+
+// function drawVisualiser6(bufferLength, x, barWidth, barHeight, dataArray) {
+//   for (let i = 0; i < bufferLength; i++) {
+//     barHeight = dataArray[i];
+
+//     ctx.save();
+//     ctx.translate(canvas.width / 2, canvas.height / 2);
+//     // ctx.rotate(i * 1.6180339887 );
+//     ctx.rotate(i / rotationFactor);
+
+//     ctx.drawImage(sprite, 0, barHeight, barHeight / 2.5, barHeight / 2.5);
+//     x += barWidth;
+//     ctx.restore();
+//   }
+
+//   let size = dataArray[15] * 1.5 > 100 ? dataArray[15] : 100;
+  
+//   ctx.drawImage(
+//     sprite,
+//     canvas.width / 2 - size / 2 ,
+//     canvas.height / 2 - size / 2,
+//     size,
+//     size,
+//   );
+// }
