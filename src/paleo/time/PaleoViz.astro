@@ -1,9 +1,11 @@
 ---
 import "@fontsource-variable/inter";
+import Starfield from "~/components/starfield.astro";
 import "~/styles/index.css";
+import Constellation from "~/vfx/constellation.astro";
 
 const { generator, site } = Astro;
-const image = new URL("/thumb.png", site);
+const image = new URL("/vizhero.png", site);
 const description =
   "Make Your Own Dinosaur & Fossil Themed Audio Visualisers with ArtechFuz3D";
 ---
@@ -12,15 +14,22 @@ const description =
 <html lang="en" class="h-full motion-safe:scroll-smooth" data-theme="dark">
   <head>
     <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE-edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="generator" content={generator} />
+
+    <title>Paleontological Audio Visualiser</title>
+    <meta name="description" content={description} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css"
+      href="https://fonts.googleapis.com/css2?family=Alata&family=Bangers&family=Creepster&family=Noto+Sans+Canadian+Aboriginal:wght@100..900&family=Orbitron:wght@400..900&family=Wavefont:wght@4..1000&display=swap"
       rel="stylesheet"
     />
-    <title>Paleontological Audio Visualiser</title>
+
+    <!-- social media -->
+    <meta property="og:title" content="Paleontological Audio Visualiser" />
     <meta name="description" content={description} />
     <meta property="og:image" content={image} />
     <meta property="og:url" content={site} />
@@ -28,7 +37,6 @@ const description =
     <style>
       body {
         transition: background 0.5s ease; /* Smooth transition for background */
-
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -46,6 +54,7 @@ const description =
         left: 0;
         width: 100%;
         height: 100%;
+        /* z-index: 25; */
       }
 
       /* Styling for playlist controls */
@@ -53,7 +62,7 @@ const description =
         position: absolute;
         top: 20px;
         right: 20px;
-        z-index: 10;
+        z-index: 800;
         color: white;
         font-family: Arial, sans-serif;
         display: flex;
@@ -71,6 +80,7 @@ const description =
         border-radius: 8px;
         cursor: pointer;
         transition: background-color 0.3s;
+        z-index: 800;
       }
 
       .playlist-controls button:hover {
@@ -103,143 +113,337 @@ const description =
         padding: 20px;
         border-radius: 5px;
         color: dimgray;
+        z-index: 800;
       }
 
       #visualizerSelect {
         font-size: 16px;
         padding: 5px;
+        z-index: 800;
       }
 
       ul {
         display: none;
+        z-index: 800;
       }
 
       .slider-container {
+        z-index: 800;
         position: absolute;
         top: 20px;
         left: 400px;
         width: 300px;
         color: white;
-        font-family:
-          system-ui,
-          -apple-system,
-          BlinkMacSystemFont,
-          "Segoe UI",
-          Roboto,
-          Oxygen,
-          Ubuntu,
-          Cantarell,
-          "Open Sans",
-          "Helvetica Neue",
-          sans-serif,
-          sans-serif;
       }
 
       .rotation-slider {
         position: absolute;
         top: 20px;
         left: 400px;
-
+        z-index: 800;
         color: white;
-        font-family:
-          system-ui,
-          -apple-system,
-          BlinkMacSystemFont,
-          "Segoe UI",
-          Roboto,
-          Oxygen,
-          Ubuntu,
-          Cantarell,
-          "Open Sans",
-          "Helvetica Neue",
-          sans-serif,
-          sans-serif;
       }
       .hidden {
         visibility: hidden;
       }
+
+      button {
+        width: 62px;
+        height: 42px;
+        border: 2px solid #414141;
+        border-radius: 14%;
+        font-size: 14px;
+        font-weight: bold;
+        color: rgb(0, 0, 0);
+        cursor: pointer;
+        outline: none;
+        transition: all 1s ease;
+        display: inline-block;
+        margin: 5px 5px;
+      }
+
+      /* Container for all buttons */
+      #toggleBtns {
+        width: 300px;
+        height: 50px;
+        /* padding-top: 110px; */
+        background: transparent;
+        background-image: url("/ui/menuButton.webp");
+        background-size: cover;
+        background-position: center;
+        position: absolute;
+        top: -40px;
+        left: 63vw;
+        /* transform: translateX(-50%); */
+        z-index: 800;
+        text-align: center;
+        transform-origin: top center;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        gap: 2px;
+        padding-top: 20px;
+      }
+
+      #toggleBtns:hover {
+        padding-top: 90px;
+        animation: popdown 0.6s ease-out forwards;
+      }
+      @keyframes popdown {
+        0% {
+          transform: translateY(0);
+          transform-origin: top center;
+        }
+        100% {
+          transform: translateY(50px);
+          transform-origin: top center;
+        }
+      }
+      /* fx button styles */
+      .fxButtons {
+        color: bisque; /* Text color */
+        font-family: "Orbitron", sans-serif; /* Set the font family (with fallback font) */
+        text-shadow: 1px 1px 2px tomato; /* Adds a shadow to the text (x-offset, y-offset, blur-radius, color) */
+        width: 200px;
+        height: 80px;
+        background: transparent;
+        background-size: cover;
+        background-position: center;
+        border: none;
+        border-radius: 0;
+        font-size: 18px;
+        text-overflow: clip;
+        cursor: pointer;
+        outline: none;
+        display: inline-flex; /* Changed to inline-flex for better centering */
+        justify-content: center; /* Center the text horizontally */
+        align-items: center; /* Center the text vertically */
+        padding-bottom: 45px; /* Remove padding for exact alignment */
+        transform-origin: top center;
+      }
+
+      /* EFFECT BUTTONS */
+      /* Inactive state */
       #toggleButton {
-        width: 50px;
-        height: 45px;
-        /* background-color: rgb(40, 218, 99); */
-        background: radial-gradient(circle, rgb(40, 218, 99), rgb(0, 0, 0));
-        border: none;
-        border-radius: 50%;
-        position: absolute;
-        z-index: 55;
-        top: 30px;
-        right: 300px;
-        cursor: pointer;
+        background-image: url("/ui/effectButton.webp");
+        --initial-rotation: 90deg;
+        animation: springEffect 0.4s ease-out forwards;
       }
-
+      /* Active state */
       #toggleButton.active {
-        /* background-color: rgb(255, 0, 0); */
-        background: radial-gradient(circle, rgb(231, 15, 15, 0.5), rgb(0, 0, 0, 0.5));
-
-        width: 55px;
-        height: 35px;
-        border: none;
-        border-radius: 50%;
-        position: absolute;
-        z-index: 55;
-        top: 10px;
-        right: 300px;
-        cursor: pointer;
+        background-image: url("/ui/effectButton.webp");
+        --initial-rotation: 0deg;
+        animation: springEffect 0.4s ease-out forwards;
       }
-
       #blurButton {
-        width: 50px;
-        height: 45px;
-        background: radial-gradient(circle, rgb(40, 218, 99), blue);
-        border: none;
-        border-radius: 50%;
-        position: absolute;
-        z-index: 55;
-        top: 30px;
-        right: 370px;
-        cursor: pointer;
+        background-image: url("/ui/effectButton.webp");
+        --initial-rotation: 90deg;
+        animation: springEffect 0.4s ease-out forwards;
+      }
+      /* Active states */
+      #blurButton.active {
+        background-image: url("/ui/effectButton.webp");
+        --initial-rotation: 0deg;
+        animation: springEffect 0.4s ease-out forwards; /* Ensure the animation stays at the final state */
+      }
+      #fx1Button {
+        background-image: url("/ui/effectButton.webp");
+        --initial-rotation: 90deg;
+        animation: springEffect 0.4s ease-out forwards; /* Ensure the animation stays at the final state */
       }
 
-      #blurButton.active {
-        background: radial-gradient(circle, rgb(185, 25, 185, 0.5), rgba(0, 0, 255, 0.5));
-        top: 10px;
-        right: 370px;
-        width: 55px;
-        height: 35px;
+      /* Active states */
+      #fx1Button.active {
+        background-image: url("/ui/effectButton.webp");
+        --initial-rotation: 0deg;
+        animation: springEffect 0.4s ease-out forwards; /* Ensure the animation stays at the final state */
+      }
+
+      #fxButton {
+        background-image: url("/ui/effectButton.webp");
+        --initial-rotation: 90deg;
+        animation: springEffect 0.4s ease-out forwards; /* Ensure the animation stays at the final state */
+      }
+      /* Active states */
+      #fxButton.active {
+        background-image: url("/ui/effectButton.webp");
+        --initial-rotation: 0deg;
+        animation: springEffect 0.4s ease-out forwards;
+      }
+
+      #blendModeButton {
+        background-image: url("/ui/effectButton.webp");
+        --initial-rotation: 90deg;
+        animation: springEffect 0.4s ease-out forwards;
+      }
+      /* Active states */
+      #blendModeButton.active {
+        background-image: url("/ui/effectButton.webp");
+        --initial-rotation: 0deg;
+        animation: springEffect 0.4s ease-out forwards;
+      }
+
+      /* Animation */
+      @keyframes springEffect {
+        0% {
+          transform: translateY(0) rotate(var(--initial-rotation, 0deg))
+            scale(1); /* Start from initial rotation */
+          transform-origin: top center;
+        }
+        20% {
+          transform: translateY(-10px)
+            rotate(calc(var(--initial-rotation, 0deg) - 30deg)) scale(0.9);
+        }
+        40% {
+          transform: translateY(-20px)
+            rotate(calc(var(--initial-rotation, 0deg) - 60deg)) scale(0.95);
+        }
+        60% {
+          transform: translateY(-15px)
+            rotate(calc(var(--initial-rotation, 0deg) - 80deg)) scale(1.05);
+        }
+        80% {
+          transform: translateY(-10px)
+            rotate(calc(var(--initial-rotation, 0deg) - 85deg)) scale(1);
+        }
+        100% {
+          transform: translateY(0)
+            rotate(calc(var(--initial-rotation, 0deg) - 90deg)) scale(1); /* Final rotated state */
+        }
       }
 
       #toggleCanvasBackgroundBtn {
+        left: -3px;
         position: absolute;
         width: 280px;
-        top: 90px;
-        left: auto;
-        background-color: #4caf50;
-        color: white;
-        border: none;
-        padding: 12px 10px;
+        background: linear-gradient(135deg, #4ca3eb, #2370b8);
+
+        color: rgb(0, 0, 0);
+        border: 3px solid transparent; /* Fixed border value */
         font-size: 16px;
         cursor: pointer;
-        border-radius: 8px;
-        /* transition: background-color 0.3s; */
+        border-radius: 5px;
+        transition:
+          background 0.3s ease,
+          transform 0.3s ease,
+          left 0.3s ease; /* Added transition for 'left' */
       }
 
       #toggleCanvasBackgroundBtn:hover {
-        background-color: #45a049;
+        left: 2px; /* Moves the button to the right on hover */
+        background: linear-gradient(
+          135deg,
+          #45a07d,
+          #19b41e
+        ); /* Slightly darker hover gradient */
+        transform: scale(1.05); /* Adds a subtle scale effect on hover */
+      }
+
+      #smokeExplosion,
+      #fireExplosion {
+        display: none;
+      }
+      #audioupload {
+        border-radius: 5px;
+        padding: 7px;
+        z-index: 800;
+      }
+      #audio1 {
+        z-index: 800;
       }
     </style>
   </head>
   <body
     class="h-full w-full overflow-x-hidden text-default text-base selection:bg-secondary selection:text-white"
   >
-    <button id="toggleButton" class="text-sm font-bold text-black">UI</button>
-    <button id="blurButton" class="text-sm font-bold text-black">BLUR</button>
+    <div id="#starfield">
+      <Starfield />
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const fx1Button = document.getElementById("fx1Button");
+        const starfield = document.getElementById("starfield"); // Starfield div containing canvas
+        const canvas1 = document.getElementById("canvas1");
+        const transparencyButton =
+          document.getElementById("transparencyButton"); // Assuming you have a transparency button
+
+        let isTransparent = false; // Track transparency state
+
+        if (fx1Button && starfield && canvas1) {
+          // Initially hide the starfield component (default off)
+          starfield.style.display = "none"; // Ensure starfield is hidden by default
+
+          // Ensure initial transparency state
+          if (canvas1.style.backgroundColor === "transparent") {
+            isTransparent = true;
+          }
+
+          fx1Button.addEventListener("click", () => {
+            // Toggle starfield visibility and set the canvas background
+            if (starfield.style.display === "none") {
+              starfield.style.display = "block"; // Show the component
+              if (!isTransparent) {
+                canvas1.style.backgroundColor = "transparent"; // Set background to transparent if not already
+                isTransparent = true;
+              } else {
+                canvas1.style.backgroundColor = "black"; // Set background to black if already transparent
+                isTransparent = false;
+              }
+            } else {
+              starfield.style.display = "none"; // Hide the component
+              canvas1.style.backgroundColor = "black"; // Set background to black
+              isTransparent = false;
+            }
+
+            // Toggle button active state (for visual feedback)
+            fx1Button.classList.toggle("active");
+          });
+
+          // Add event listener for transparency button
+          if (transparencyButton) {
+            transparencyButton.addEventListener("click", () => {
+              // Directly toggle transparency when transparency button is clicked
+              if (canvas1.style.backgroundColor !== "transparent") {
+                canvas1.style.backgroundColor = "transparent";
+                isTransparent = true;
+              } else {
+                canvas1.style.backgroundColor = "black";
+                isTransparent = false;
+              }
+            });
+          }
+        } else {
+          console.error(
+            "Required elements not found in the DOM for fx1Button, starfield, or canvas1."
+          );
+        }
+      });
+    </script>
+
+    <div id="toggleBtns" class="z-400 absolute">
+      <button class="fxButtons" id="toggleButton" class="font-bold text-sm"
+        >UI</button
+      >
+      <button class="fxButtons" id="blurButton" class="font-bold text-sm"
+        >BLUR</button
+      >
+      <button class="fxButtons" id="fxButton" class="font-bold text-sm"
+        >FX</button
+      >
+      <button class="fxButtons" id="fx1Button" class="font-bold text-sm"
+        >FX1</button
+      >
+      <button class="fxButtons" id="blendModeButton" class="font-bold text-sm"
+        >XOR</button
+      >
+    </div>
 
     <div
       id="container"
       class="absolute h-full w-full overflow-x-hidden bg-transparent"
     >
       <canvas
-        class="absolute h-full w-full overflow-hidden bg-transparent hover:blur-none"
+        class="absolute h-full w-full overflow-hidden bg-transparent"
         id="canvas1"></canvas>
 
       <!-- Editor -->
@@ -258,9 +462,9 @@ const description =
         <audio
           id="audio1"
           controls
-          onloadedmetadata="this.volume = 0.65"
-          class="absolute top-0 left-1/2 transform -translate-x-1/2 mt-4"></audio>
-        <!-- <audio id="audio1" controls  class="mt-150-auto block"></audio> -->
+          onloadedmetadata="this.volume = 0.5"
+          class="absolute left-1/2 top-0 mt-4 -translate-x-1/2 transform"
+        ></audio>
 
         <!-- Add this in your HTML body where you want the UI element to appear -->
         <div id="visualizerMenu">
@@ -271,14 +475,18 @@ const description =
             <option value="visualizer4">Visualizer 4</option>
             <option value="visualizer5">Visualizer 5</option>
             <option value="visualizer6">Visualizer 6</option>
+            <option value="visualizer7">Visualizer 7</option>
           </select>
         </div>
 
         <!-- UPLOAD BUTTONS -->
-        <div class="white z-100 w-[300px] h-[100px] bg-teal-600 absolute py-2">
+        <div
+          id="audioupload"
+          class="white z-100 absolute left-1 top-5 h-[100px] w-[300px] bg-teal-600 py-2"
+        >
           <label>Choose Audio</label>
           <input
-            class="bottom-10 block flex-auto bg-transparent font-black"
+            class="block w-[280px] cursor-pointer rounded border border-gray-300 bg-transparent px-0 py-0 font-medium text-gray-800 text-xs hover:bg-slate-300"
             type="file"
             id="fileupload"
             accept="audio/*"
@@ -287,18 +495,18 @@ const description =
 
         <!-- BG -->
         <div
-          class="absolute left-0 top-36 z-50 h-[100px] w-[300px] rounded-md bg-cyan-700 bg-opacity-100 p-2 shadow backdrop-blur-md"
+          class="absolute left-1 top-32 z-50 h-[100px] w-[300px] rounded-md bg-cyan-700 bg-opacity-100 p-2 shadow backdrop-blur-md"
         >
-          <h2 class="mb-0 text-left font-medium text-gray-800 text-sm">
-            Set Custom Background
-          </h2>
+          <label>Choose Background</label>
           <input
             class="block w-[280px] cursor-pointer rounded border border-gray-300 bg-transparent px-0 py-0 font-medium text-gray-800 text-xs hover:bg-slate-300"
             type="file"
             id="imageUpload"
             accept="image/*"
           />
-          <h3 class="mb-0 text-center font-medium text-gray-800 text-sm">.. and then</h3>
+          <h3 class="mb-0 text-center font-medium text-gray-800 text-sm">
+            .. and then
+          </h3>
 
           <button id="toggleCanvasBackgroundBtn"
             >Toggle Background Transparency</button
@@ -326,11 +534,10 @@ const description =
         if (toggleCanvasBackgroundBtn && canvas1) {
           toggleCanvasBackgroundBtn.addEventListener("click", function () {
             // Toggle canvas background between black and transparent
-            if (canvas1.style.backgroundColor === "black") {
-              canvas1.style.backgroundColor = "transparent"; // Set background to transparent
-            } else {
-              canvas1.style.backgroundColor = "black"; // Set background to black
-            }
+            canvas1.style.backgroundColor =
+              canvas1.style.backgroundColor === "black"
+                ? "transparent"
+                : "black";
           });
         } else {
           console.error("Required elements not found in the DOM.");
@@ -400,10 +607,10 @@ const description =
 
         if (blurButton && canvas1) {
           blurButton.addEventListener("click", () => {
-            if (canvas1.style.filter === "blur(8px) contrast(10)") {
+            if (canvas1.style.filter === "blur(6px) contrast(10)") {
               canvas1.style.filter = "";
             } else {
-              canvas1.style.filter = "blur(8px) contrast(10)";
+              canvas1.style.filter = "blur(6px) contrast(10) ";
             }
             blurButton.classList.toggle("active");
           });
@@ -414,6 +621,72 @@ const description =
         }
       });
     </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const blendModeButton = document.getElementById("blendModeButton");
+        const canvas1 = document.getElementById("canvas1");
+        if (blendModeButton && canvas1) {
+          let isXorMode = false; // Track whether xor mode is active
+
+          blendModeButton.addEventListener("click", () => {
+            // Toggle the blend mode
+            isXorMode = !isXorMode;
+            ctx.globalCompositeOperation = isXorMode ? "xor" : "source-over";
+
+            // Log the current blend mode for debugging
+            // console.log("Current blend mode:", ctx.globalCompositeOperation);
+
+            // Toggle button appearance
+            blendModeButton.classList.toggle("active");
+          });
+        } else {
+          console.error("Blend mode button not found in the DOM.");
+        }
+      });
+    </script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const fxButton = document.getElementById("fxButton");
+        const canvas1 = document.getElementById("canvas1");
+        const constellation = document.getElementById("constellation"); // Get the Constellation component
+
+        if (fxButton && canvas1 && constellation) {
+          // Initially hide the constellation component (default off)
+          constellation.style.display = "none";
+
+          fxButton.addEventListener("click", () => {
+            // Toggle constellation visibility
+            if (constellation.style.display === "none") {
+              constellation.style.display = "block"; // Show the component
+            } else {
+              constellation.style.display = "none"; // Hide the component
+            }
+
+            // Toggle the background color of canvas1
+            canvas1.style.backgroundColor =
+              canvas1.style.backgroundColor === "transparent"
+                ? "black"
+                : "transparent";
+
+            // Toggle button active state
+            fxButton.classList.toggle("active");
+          });
+        } else {
+          console.error(
+            "Required elements not found in the DOM for fxButton, canvas1, or constellation."
+          );
+        }
+      });
+    </script>
+
+    <div id="constellation">
+      <Constellation />
+    </div>
+
+    <!-- Props -->
+
+    <!-- Main Script -->
     <script src="../../paleo/time/script.js"></script>
   </body>
 </html>
